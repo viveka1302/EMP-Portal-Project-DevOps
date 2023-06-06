@@ -10,7 +10,7 @@ pipeline {
         stage('Build') {
             steps {
                 git branch: 'main', url: 'https://github.com/Shantanu-2001/EMP-Portal-Project-DevOps'
-                sh 'python3 ops.py'
+                sh 'python3 app.py'
             }
         }
         stage('Test') {
