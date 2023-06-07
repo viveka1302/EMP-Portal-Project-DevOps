@@ -1,20 +1,52 @@
 pipeline {
-    agent any
-    stages {
-        stage("Stage 1"){
+  agent any
+
+ 
+
+stages {
+     stage('Checkout') {
             steps {
-                echo "This is stage 1"
+                git credentialsId: 'github-jenkins', url: 'https://github.com/Shantanu-2001/EMP-Portal-Project-DevOps.git'
+                echo 'CheckOut Success'
             }
         }
-        stage("Stage 2"){
-            steps {
-                echo "This is stage 2"
-            }
+
+ 
+
+stage('lint'){
+   steps {
+        sh "virtualenv --python=/usr/bin/python venv"
+        sh "export TERM='linux'"  
+        sh 'pylint --rcfile=pylint.cfg funniest/ $(find . -maxdepth 1 -name "*.py" -print) --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" > pylint.log || echo "pylint exited with $?"'
+        sh "rm -r venv/"
+
+        echo "linting Success, Generating Report"
+
+        warnings canComputeNew: false, canResolveRelativePaths: false, defaultEncoding: '', excludePattern: '', healthy: '', includePattern: '', messagesPattern: '', parserConfigurations: [[parserName: 'PyLint', pattern: '*']], unHealthy: ''
+
+       }   
+     }
+
+stage('test'){
+   steps {
+
+        sh "pytest --cov ./ --cov-report html --verbose"
+        publishHTML(target:
+            [allowMissing: false,
+              alwaysLinkToLastBuild: false,
+            keepAll: false,
+            reportDir: 'htmlcov',
+            reportFiles: 'index.html',
+            reportName: 'Test Report',
+            reportTitles: ''])  
+
+        echo "Testing Success"   
+          }  
         }
-        stage("Stage 3"){
-            steps {
-                echo "This is stage 3"
-            }
-        }
-    }
+
+   
+
+ 
+
+       }
 }
