@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -10,6 +11,7 @@ pipeline {
         stage('Build') {
             steps {
                 git branch: 'main', url: 'https://github.com/Shantanu-2001/EMP-Portal-Project-DevOps.git'
+                sh 'pip install -r requirements.txt'  // Install project dependencies
                 sh 'python3 app.py'
             }
         }
