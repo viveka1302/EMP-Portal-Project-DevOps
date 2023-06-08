@@ -5,9 +5,12 @@ from app import app, db
 
 @pytest.fixture
 def client():
+    app_context = app.app_context()
+    app_context.push()
     initDB()
     yield app.test_client()
     truncateDB()
+    app_context.pop()
 
 
 def initDB():
@@ -18,8 +21,9 @@ def initDB():
 
 
 def truncateDB():
-    models.Employee.query.delete()
-    db.session.commit()
+    with app.app_context():
+        models.Employee.query.delete()
+        db.session.commit()
 
 
 def test_index():
@@ -31,7 +35,8 @@ def test_index():
 def test_index_response(client):
     response = client.get('/')
     assert b"Employee Data" in response.data
-    assert models.Employee.query.count() == 0
+    with app.app_context():
+        assert models.Employee.query.count() == 0
 
 
 def test_add(client):
@@ -42,7 +47,8 @@ def test_add(client):
                  'salary': '2000',
                  'department': 'Sales'}
     client.post('/add', data=test_data)
-    assert models.Employee.query.count() == 1
+    with app.app_context():
+        assert models.Employee.query.count() == 1
 
 
 def test_edit():
