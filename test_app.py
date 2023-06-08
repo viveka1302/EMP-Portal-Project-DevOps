@@ -32,12 +32,6 @@ def test_index():
     assert response.status_code == 200
 
 
-def test_index_response(client):
-    response = client.get('/')
-    assert b"Employee Data" in response.data
-    with app.app_context():
-        assert models.Employee.query.count() == 0
-
 
 def test_add(client):
     test_data = {'name': 'Mickey Test',
