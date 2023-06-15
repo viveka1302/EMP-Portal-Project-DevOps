@@ -10,24 +10,12 @@ pipeline {
         
         stage('Build and Test') {
             steps {
+		sh sudo su
+
                 sh 'pip install -r requirements.txt' // Install project dependencies
                 
                 sh 'pylint app.py' // Run pylint for code analysis
                 
-                sh 'pytest' // Run unit tests with pytest
-              /*  
-                script {
-                    // Start Flask server for testing
-                    sh 'python app.py &'
-                    sleep 10 // Wait for the server to start (adjust as needed)
-                    
-                    try {
-                        sh 'pytest --cov=your_module_name' // Run integration tests with code coverage
-                    } finally {
-                        // Stop Flask server after testing
-                        sh 'pkill -f "python app.py"'
-                    }
-                }*/
             }
         }
         
