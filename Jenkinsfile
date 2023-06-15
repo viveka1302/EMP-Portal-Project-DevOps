@@ -10,7 +10,7 @@ pipeline {
         
         stage('Build and Test') {
             steps {
-		sh sudo su
+		sh 'sudo su'
 
                 sh 'pip install -r requirements.txt' // Install project dependencies
                 
