@@ -4,9 +4,7 @@ pipeline {
     stages {
         stage('Pull Repository') {
             steps {
-                checkout([$class: 'GitSCM',
-                    branches: [[name: '*/Dev/*']],
-                    userRemoteConfigs: [[url: 'https://github.com/viveka1302/EMP-Portal-Project-DevOps.git']]])
+		checkout scmGit(branches: [[name: '*/Dev']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/viveka1302/EMP-Portal-Project-DevOps.git']])
             }
         }
         
@@ -14,7 +12,7 @@ pipeline {
             steps {
                 sh 'pip install -r requirements.txt' // Install project dependencies
                 
-                sh 'pylint your_module.py' // Run pylint for code analysis
+                sh 'pylint app.py' // Run pylint for code analysis
                 
                 sh 'pytest' // Run unit tests with pytest
               /*  
