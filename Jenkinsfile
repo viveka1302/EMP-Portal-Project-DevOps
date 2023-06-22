@@ -31,6 +31,12 @@ pipeline {
                 sh 'git push origin main'
             }
         }
+	stage('SonarQube Analysis') {
+   	 def scannerHome = tool 'VivekSonarServer';
+  	  withSonarQubeEnv() {
+  	    sh "${scannerHome}/bin/sonar-scanner"
+   	      }
+	  }
     }
     
     post {
