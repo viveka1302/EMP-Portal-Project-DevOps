@@ -32,13 +32,13 @@ pipeline {
             }
         }
 	stage('SonarQube Analysis') {
+	steps{
    	 def scannerHome = tool 'VivekSonarServer';
   	  withSonarQubeEnv() {
-		steps{
   	 	   sh "${scannerHome}/bin/sonar-scanner"
-   	      		}
-		}
+   	      	}
 	  }
+	}
     }
     
     post {
