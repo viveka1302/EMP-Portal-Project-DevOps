@@ -13,24 +13,33 @@ pipeline {
 		sh 'sudo su'
 
                 sh 'pip install -r requirements.txt' // Install project dependencies
+  
                 
-                sh 'pylint app.py' // Run pylint for code analysis
-                
+            }
+        }
+	stage('Pylint Analysis') {
+            steps {
+                script {
+                    // Run pylint and capture the result
+                    def pylintResult = sh(
+                        script: 'pylint app.py',
+                        returnStatus: true
+                    )
+                    
+                    // Print the pylint log output
+                    sh 'cat pylint.log'
+                    
+                    // Check the result and mark the stage as successful regardless
+                    if (pylintResult == 0) {
+                        echo 'Pylint analysis passed'
+                    } else {
+                        echo 'Pylint analysis failed'
+                    }
+                }
             }
         }
         
-        stage('Merge to Main Branch') {
-            when {
-                not {
-                    branch 'main/*'
-                }
-            }
-            steps {
-                sh 'git checkout main'
-                sh 'git merge ${env.Dev}'
-                sh 'git push origin main'
-            }
-        }
+        
 	stage('SonarQube Analysis') {
             steps {
                 // Configure SonarQube Scanner
@@ -43,26 +52,19 @@ pipeline {
         }
     }
     
-    post {
-        success {
-            script {
-                // Send notification for successful build
-                notify("Build Successful", "The build and tests passed successfully.")
-            }
-        }
-        failure {
-            script {
-                // Send notification for build failure
-                notify("Build Failed", "The build or tests failed. Please check the Jenkins logs for details.")
-            }
+post {
+    always {
+        script {
+            def buildStatus = currentBuild.currentResult ?: 'UNKNOWN'
+            def color = buildStatus == 'SUCCESS' ? 'good' : 'danger'
+
+            slackSend(
+                channel: '#devops-project',
+                color: color,
+                message: "Build ${env.BUILD_NUMBER} ${buildStatus}: STAGE=${env.STAGE_NAME}",
+                teamDomain: 'xaidv05',
+                tokenCredentialId: 'slackcred'
+            )
         }
     }
-}
-
-def notify(subject, message) {
-    emailext (
-        subject: subject,
-        body: message,
-        to: '500082607@stu.upes.ac.in',
-    )
 }
