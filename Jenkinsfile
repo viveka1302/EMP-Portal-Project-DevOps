@@ -46,7 +46,7 @@ stage('SonarQube Analysis') {
                 withSonarQubeEnv('VivekSonarServer') {
                     // Run SonarQube analysis
                     // Replace with your project key and token
-                   sh "VivekSonarServer -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} -Dsonar.python.coverage.reportPaths=coverage.xml -Dsonar.login=squ_6dfb72ffd8f034ed0d4da5920c4010ae3e77b316"
+                   sh "SonarQube-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} -Dsonar.python.coverage.reportPaths=coverage.xml -Dsonar.login=squ_6dfb72ffd8f034ed0d4da5920c4010ae3e77b316"
                 }
             }
         }
