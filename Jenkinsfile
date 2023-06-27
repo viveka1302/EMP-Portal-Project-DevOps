@@ -26,8 +26,6 @@ pipeline {
                         returnStatus: true
                     )
                     
-                    // Print the pylint log output
-                    sh 'cat pylint.log'
                     
                     // Check the result and mark the stage as successful regardless
                     if (pylintResult == 0) {
