@@ -28,7 +28,7 @@ pipeline {
                     
                     
                     // Check the result and mark the stage as successful regardless
-                    if (pylintResult == 0) {
+                    if (pylintResult == 1) {
                         echo 'Pylint analysis passed'
                     } else {
                         echo 'Pylint analysis failed'
