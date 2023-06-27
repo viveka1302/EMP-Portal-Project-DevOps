@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        PATH = "$PATH:/path/to/sonar-scanner/bin"
+        PATH = "$PATH:/var/lib/jenkins/plugins/"
     }
     stages {
         stage('Pull Repository') {
