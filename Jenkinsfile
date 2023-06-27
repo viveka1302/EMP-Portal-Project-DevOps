@@ -38,12 +38,16 @@ pipeline {
         }
         
         
-	stage('SonarQube Analysis') {
-    def scannerHome = tool 'SonarScanner';
-    withSonarQubeEnv() {
-      sh "${scannerHome}/bin/sonar-scanner"
-    }
-  }
+stage('SonarQube Analysis') {
+            steps {
+                // Configure SonarQube Scanner
+                withSonarQubeEnv('SonarQube') {
+                    // Run SonarQube analysis
+                    // Replace with your project key and token
+                   sh 'sonar-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=new File('.').absolutePath -Dsonar.python.coverage.reportPaths=coverage.xml -Dsonar.login=squ_6dfb72ffd8f034ed0d4da5920c4010ae3e77b316'
+                }
+            }
+        }
     }
     
 post {
