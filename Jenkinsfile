@@ -1,6 +1,8 @@
 pipeline {
     agent any
-    
+    environment {
+        PATH = "$PATH:/path/to/sonar-scanner/bin"
+    }
     stages {
         stage('Pull Repository') {
             steps {
