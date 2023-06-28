@@ -43,7 +43,7 @@ pipeline {
 stage('SonarQube Analysis') {
             steps {
                 // Configure SonarQube Scanner
-		def scannerHome = tool 'SonarScanner 4.8.0.2856';
+		def scannerHome = tool "SonarScanner 4.8.0.2856";
 
                 withSonarQubeEnv('VivekSonarServer') {
                     // Run SonarQube analysis
