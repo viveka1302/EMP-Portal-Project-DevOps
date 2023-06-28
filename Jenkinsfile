@@ -47,7 +47,7 @@ stage('SonarQube Analysis') {
                     // Run SonarQube analysis
                     // Replace with your project key and token
 		   sh 'sudo su'
-                   sh "/var/lib/jenkins/plugins/sonar/WEB-INF/lib/sonar.jar -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} -Dsonar.python.coverage.reportPaths=coverage.xml -Dsonar.login=squ_6dfb72ffd8f034ed0d4da5920c4010ae3e77b316"
+                   sh "/var/lib/jenkins/plugins/sonar/WEB-INF/lib/sonar.jar -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} -Dsonar.python.coverage.reportPaths=coverage.xml -Dsonar.login=squ_84e54d83d7734e20e9a8b664950679e6a56cb087"
                 }
             }
         }
