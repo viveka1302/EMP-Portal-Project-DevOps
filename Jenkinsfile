@@ -44,7 +44,7 @@ stage('SonarQube Analysis') {
             steps {
 		script{
                 // Configure SonarQube Scanner
-		def scannerHome = tool "SonarQube Scanner 4.8.0.2856";
+		def scannerHome = tool "Xebia1";
 
                 withSonarQubeEnv('VivekSonarServer') {
                     // Run SonarQube analysis
