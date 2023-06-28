@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        PATH = "$PATH:/var/lib/jenkins/plugins/sonar/WEB-INF/lib"
+        PATH = "$PATH:/var/lib/jenkins/plugins/sonar/META-INF/maven/org.jenkins-ci.plugins/sonar"
     }
     stages {
         stage('Pull Repository') {
@@ -47,7 +47,7 @@ stage('SonarQube Analysis') {
                     // Run SonarQube analysis
                     // Replace with your project key and token
 		   sh 'sudo su'
-                   sh "/var/lib/jenkins/plugins/sonar/WEB-INF/lib/sonar.jar -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} -Dsonar.python.coverage.reportPaths=coverage.xml -Dsonar.login=squ_84e54d83d7734e20e9a8b664950679e6a56cb087"
+                   sh "/var/lib/jenkins/plugins/sonar/META-INF/maven/org.jenkins-ci.plugins/sonar -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} -Dsonar.python.coverage.reportPaths=coverage.xml -Dsonar.login=squ_0b03ce0f6a2e32bb7c232f54c4834f8e69868e9c"
                 }
             }
         }
