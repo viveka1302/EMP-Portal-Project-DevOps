@@ -42,6 +42,7 @@ pipeline {
         
 stage('SonarQube Analysis') {
             steps {
+		script{
                 // Configure SonarQube Scanner
 		def scannerHome = tool "SonarScanner 4.8.0.2856";
 
@@ -51,6 +52,7 @@ stage('SonarQube Analysis') {
 		   sh 'sudo su'
                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} -Dsonar.python.coverage.reportPaths=coverage.xml -Dsonar.login=squ_0b03ce0f6a2e32bb7c232f54c4834f8e69868e9c"
                 }
+		}
             }
         }
     }
