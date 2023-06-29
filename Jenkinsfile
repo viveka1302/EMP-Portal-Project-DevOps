@@ -55,6 +55,11 @@ stage('SonarQube Analysis') {
 		}
             }
         }
+stage("Quality gate") {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
     }
     
 post {
