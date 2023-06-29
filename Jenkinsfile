@@ -59,7 +59,7 @@ stage('SonarQube Analysis') {
  stage('Quality Gates'){
 	steps{
 	script{
-      withSonarQubeEnv(credentialsId: '${env.SonarScannerID})  {
+      withSonarQubeEnv(credentialsId: '${env.SonarScannerID}')  {
      timeout(time: 1, unit: 'HOURS') {
     def qg = waitForQualityGate() 
     if (qg.status != 'OK') {
