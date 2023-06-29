@@ -58,7 +58,7 @@ stage('SonarQube Analysis') {
 stage('Quality Gate') {
             steps {
                 script {
-                    def qualityGateStatus = waitForQualityGate abortPipeline: true
+                    def qualityGateStatus = waitForQualityGate()
                     if (qualityGateStatus.status != 'OK') {
                         error "Quality Gate failed! Check SonarQube for more details."
                     }
