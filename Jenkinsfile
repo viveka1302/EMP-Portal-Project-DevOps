@@ -46,11 +46,11 @@ stage('SonarQube Analysis') {
                 // Configure SonarQube Scanner
 		def scannerHome = tool "Xebia1";
 
-                withSonarQubeEnv(credentialsId: env.SonarScannerID)  {
+                withSonarQubeEnv(credentialsId: '${env.SonarScannerID}')  {
                     // Run SonarQube analysis
                     // Replace with your project key and token
 		   sh 'sudo su'
-                   sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} -Dsonar.login=env.SonarScannerID"
+                   sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} -Dsonar.login=${env.SonarScannerID}"
 
                 }
 		}
@@ -59,7 +59,7 @@ stage('SonarQube Analysis') {
  stage('Quality Gates'){
 	steps{
 	script{
-      withSonarQubeEnv(credentialsId: env.SonarScannerID)  {
+      withSonarQubeEnv(credentialsId: '${env.SonarScannerID})  {
      timeout(time: 1, unit: 'HOURS') {
     def qg = waitForQualityGate() 
     if (qg.status != 'OK') {
