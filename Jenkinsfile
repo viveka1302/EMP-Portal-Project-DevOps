@@ -46,7 +46,7 @@ stage('SonarQube Analysis') {
                 // Configure SonarQube Scanner
 		def scannerHome = tool "Xebia1";
 
-                withSonarQubeEnv('VivekSonarServer') {
+                withSonarQubeEnv(credentialsId: 'SonarScannerID')  {
                     // Run SonarQube analysis
                     // Replace with your project key and token
 		   sh 'sudo su'
@@ -60,7 +60,7 @@ stage('SonarQube Analysis') {
  stage('Quality Gates'){
 	steps{
 	script{
-      withSonarQubeEnv('VivekSonarServer') {
+      withSonarQubeEnv(credentialsId: 'SonarScannerID')  {
      timeout(time: 1, unit: 'HOURS') {
     def qg = waitForQualityGate() 
     if (qg.status != 'OK') {
