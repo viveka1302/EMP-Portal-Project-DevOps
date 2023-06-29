@@ -55,7 +55,7 @@ stage('SonarQube Analysis & Quality Gate') {
                 }
 timeout(time: 1, unit: 'MINUTES') {
 
-waitForQualityGate abortPipeline: false, credentialsId: 'SonarScannerID'
+waitForQualityGate abortPipeline: false, credentialsId:"squ_0b03ce0f6a2e32bb7c232f54c4834f8e69868e9c"
 }
 		}
             }
