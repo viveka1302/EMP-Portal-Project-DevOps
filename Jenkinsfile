@@ -49,7 +49,7 @@ stage('SonarQube Analysis') {
  withCredentials([string(credentialsId: 'SonarScannerID', variable: 'sonarCredential')]) {
                         // Retrieve the credential value and pass it as a parameter
                   
-                withSonarQubeEnv(credentialsId: sonarCredential)  {
+                withSonarQubeEnv(credentialsId: 'SonarScannerID')  {
                     // Run SonarQube analysis
                     // Replace with your project key and token
 		   sh 'sudo su'
@@ -66,7 +66,7 @@ stage('SonarQube Analysis') {
  withCredentials([string(credentialsId: 'SonarScannerID', variable: 'sonarCredential')]) {
                         // Retrieve the credential value and pass it as a parameter
                    
-      withSonarQubeEnv(credentialsId: sonarCredential)  {
+      withSonarQubeEnv(credentialsId: SonarScannerID)  {
      timeout(time: 1, unit: 'HOURS') {
     def qg = waitForQualityGate() 
     if (qg.status != 'OK') {
