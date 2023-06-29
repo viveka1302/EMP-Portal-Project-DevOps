@@ -50,7 +50,8 @@ stage('SonarQube Analysis') {
                     // Run SonarQube analysis
                     // Replace with your project key and token
 		   sh 'sudo su'
-                   sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} //login cred deleted
+                   sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE}"
+//login cred removed
 
                 }
 		}
