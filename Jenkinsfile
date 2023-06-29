@@ -60,14 +60,15 @@ stage('SonarQube Analysis') {
  stage('Quality Gates'){
 	steps{
 	script{
-      
+      withSonarQubeEnv('VivekSonarServer') {
      timeout(time: 1, unit: 'HOURS') {
     def qg = waitForQualityGate(credentialsId: 'squ_0b03ce0f6a2e32bb7c232f54c4834f8e69868e9c') 
     if (qg.status != 'OK') {
       error "Pipeline aborted due to quality gate failure: ${qg.status}"
     }
   }
-      }
+     }
+ }
   }
 }
 
