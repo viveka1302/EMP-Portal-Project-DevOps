@@ -58,6 +58,8 @@ stage('SonarQube Analysis') {
             }
         }
  stage('Quality Gates'){
+	steps{
+	script{
       
      timeout(time: 1, unit: 'HOURS') {
     def qg = waitForQualityGate(credentialsId: 'squ_0b03ce0f6a2e32bb7c232f54c4834f8e69868e9c') 
@@ -65,8 +67,9 @@ stage('SonarQube Analysis') {
       error "Pipeline aborted due to quality gate failure: ${qg.status}"
     }
   }
-      
+      }
   }
+}
 
     }
     
