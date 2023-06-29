@@ -52,19 +52,13 @@ stage('SonarQube Analysis') {
 		   sh 'sudo su'
                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} -Dsonar.login=squ_0b03ce0f6a2e32bb7c232f54c4834f8e69868e9c"
 
-                }
-		}
-            }
-        }
-stage('Quality Gate') {
-            steps {
-                script {
-		
                     def qualityGateStatus = waitForQualityGate abortPipeline: true
                     if (qualityGateStatus.status != 'OK') {
                         error "Quality Gate failed! Check SonarQube for more details."
                     }
+
                 }
+		}
             }
         }
 
