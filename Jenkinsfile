@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         PATH = "$PATH:/var/lib/jenkins/plugins/sonar/META-INF/maven/org.jenkins-ci.plugins/sonar"
+	
     }
     stages {
         stage('Pull Repository') {
@@ -45,21 +46,27 @@ stage('SonarQube Analysis') {
 		script{
                 // Configure SonarQube Scanner
 		def scannerHome = tool "Xebia1";
-
-                withSonarQubeEnv(credentialsId: '${env.SonarScannerID}')  {
+ withCredentials([string(credentialsId: 'SonarScannerID', variable: 'sonarCredential')]) {
+                        // Retrieve the credential value and pass it as a parameter
+                  
+                withSonarQubeEnv(credentialsId: sonarCredential)  {
                     // Run SonarQube analysis
                     // Replace with your project key and token
 		   sh 'sudo su'
-                   sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} -Dsonar.login=${env.SonarScannerID}"
+                   sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE}"
 
                 }
+}
 		}
             }
         }
  stage('Quality Gates'){
 	steps{
 	script{
-      withSonarQubeEnv(credentialsId: '${env.SonarScannerID}')  {
+ withCredentials([string(credentialsId: 'SonarScannerID', variable: 'sonarCredential')]) {
+                        // Retrieve the credential value and pass it as a parameter
+                   
+      withSonarQubeEnv(credentialsId: sonarCredential)  {
      timeout(time: 1, unit: 'HOURS') {
     def qg = waitForQualityGate() 
     if (qg.status != 'OK') {
@@ -68,6 +75,7 @@ stage('SonarQube Analysis') {
   }
      }
  }
+}
   }
 }
 
