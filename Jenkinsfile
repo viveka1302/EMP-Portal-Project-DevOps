@@ -53,7 +53,10 @@ stage('SonarQube Analysis & Quality Gate') {
                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} -Dsonar.python.coverage.reportPaths=${env.WORKSPACE}/coverage.xml -Dsonar.login=squ_0b03ce0f6a2e32bb7c232f54c4834f8e69868e9c"
 
                 }
+timeout(time: 1, unit: 'MINUTES') {
+
 waitForQualityGate abortPipeline: false, credentialsId: 'SonarScannerID'
+}
 		}
             }
         }
