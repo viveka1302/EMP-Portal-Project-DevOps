@@ -44,7 +44,7 @@ pipeline {
  stage('SonarQube Analysis') {
             steps {
                 script {
-                    withSonarQubeEnv(installationName: 'VivekSonarServer',credentialsId: ${SonarScannerID}) {
+                    withSonarQubeEnv(installationName: 'VivekSonarServer',credentialsId: "${SonarScannerID}") {
                         // Run SonarQube scanner for code analysis
                         sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=."
                     }
@@ -55,7 +55,7 @@ pipeline {
        stage('SonarQube Quality Gates') {
             steps {
                 script {
-                    withSonarQubeEnv(installationName: 'VivekSonarServer',credentialsId: ${SonarScannerID}) {
+                    withSonarQubeEnv(installationName: 'VivekSonarServer',credentialsId: "${SonarScannerID}") {
                         timeout(time: 1, unit: 'HOURS') {
                             // Wait for SonarQube quality gates to pass/fail
                             def qg = waitForQualityGate(abortPipeline: false, credentialsId: 'SonarScannerID')
