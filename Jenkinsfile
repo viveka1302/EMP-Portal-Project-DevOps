@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        PATH = "$PATH:/var/lib/jenkins/plugins/sonar/META-INF/maven/org.jenkins-ci.plugins/sonar"
-	
+        scannerHome = tool 'sonar-scan'
+
     }
     stages {
         stage('Pull Repository') {
@@ -41,44 +41,32 @@ pipeline {
         }
         
         
-stage('SonarQube Analysis') {
+ stage('SonarQube Analysis') {
             steps {
-		script{
-                // Configure SonarQube Scanner
-		def scannerHome = tool "Xebia1";
- withCredentials([string(credentialsId: 'SonarScannerID', variable: 'sonarCredential')]) {
-                        // Retrieve the credential value and pass it as a parameter
-                  
-                withSonarQubeEnv(credentialsId: 'SonarScannerID')  {
-                    // Run SonarQube analysis
-                    // Replace with your project key and token
-		   sh 'sudo su'
-                   sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=${env.WORKSPACE} -Dsonar.login=squ_0b03ce0f6a2e32bb7c232f54c4834f8e69868e9c"
-
+                script {
+                    withSonarQubeEnv('VivekSonarServer') {
+                        // Run SonarQube scanner for code analysis
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=DevOps-Project -Dsonar.sources=."
+                    }
                 }
-}
-		}
             }
         }
- stage('Quality Gates'){
-	steps{
-	script{
- withCredentials([string(credentialsId: 'SonarScannerID', variable: 'sonarCredential')]) {
-                        // Retrieve the credential value and pass it as a parameter
-                   
-      withSonarQubeEnv(credentialsId: SonarScannerID)  {
-     timeout(time: 1, unit: 'HOURS') {
-    def qg = waitForQualityGate() 
-    if (qg.status != 'OK') {
-      error "Pipeline aborted due to quality gate failure: ${qg.status}"
-    }
-  }
-     }
- }
-}
-  }
-}
 
+       stage('SonarQube Quality Gates') {
+            steps {
+                script {
+                    withSonarQubeEnv('VivekSonarServer') {
+                        timeout(time: 1, unit: 'HOURS') {
+                            // Wait for SonarQube quality gates to pass/fail
+                            def qg = waitForQualityGate()
+                            if (qg.status != 'OK') {
+                                error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
 post {
