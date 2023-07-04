@@ -1,9 +1,10 @@
 pipeline {
-    agent any
+   
     environment {
        def scannerHome = tool 'Xebia1'
 
     }
+ agent any
     stages {
         stage('Pull Repository') {
             steps {
