@@ -46,7 +46,7 @@ pipeline {
                 script {
                     withSonarQubeEnv('VivekSonarServer') {
                         // Run SonarQube scanner for code analysis
-                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=DevOps-Project -Dsonar.sources=."
+                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=EMP-Xebia -Dsonar.sources=."
                     }
                 }
             }
