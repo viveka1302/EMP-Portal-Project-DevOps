@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        scannerHome = tool 'sonar-scan'
+       def scannerHome = tool 'Xebia1'
 
     }
     stages {
