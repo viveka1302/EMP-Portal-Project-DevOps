@@ -55,7 +55,7 @@ stage("Testing with Pytest"){
 			// Activate the virtual environment
        		   sh '. myenv/bin/activate'
 
-				sh "pytest test_app.py"
+				sh "python3 -m pytest test_app.py"
 		}
 	}
 
