@@ -15,7 +15,7 @@ pipeline {
         stage('Build and Test') {
             steps {
 	script{
-	    apt install python3.10-venv
+	 sh "sudo apt install python3.10-venv"
 
   	// Create a virtual environment
           sh 'python3 -m venv myenv'
