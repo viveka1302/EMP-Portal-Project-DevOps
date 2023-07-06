@@ -40,6 +40,16 @@ pipeline {
                 }
             }
         }
+stage("Testing with Pytest"){
+	steps{
+		script{
+			withPythonEnv(){
+				sh "pytest test_app.py"
+		}
+	}
+  }	
+
+}
         
         
  stage('SonarQube Analysis') {
