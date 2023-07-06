@@ -16,7 +16,7 @@ pipeline {
             steps {
 	script{
   	// Create a virtual environment
-          sh 'python -m venv myenv'
+          sh 'python3 -m venv myenv'
           
           // Activate the virtual environment
           sh 'source myenv/bin/activate'		
