@@ -14,11 +14,17 @@ pipeline {
         
         stage('Build and Test') {
             steps {
+	script{
+  	// Create a virtual environment
+          sh 'python -m venv myenv'
+          
+          // Activate the virtual environment
+          sh 'source myenv/bin/activate'		
 		sh 'sudo su'
 
                 sh 'pip install -r requirements.txt' // Install project dependencies
   
-                
+               } 
             }
         }
 	stage('Pylint Analysis') {
@@ -43,7 +49,8 @@ pipeline {
 stage("Testing with Pytest"){
 	steps{
 		script{
-			
+			// Activate the virtual environment
+       		   sh 'source myenv/bin/activate'
 				sh "pytest test_app.py"
 		}
 	}
