@@ -21,7 +21,8 @@ pipeline {
           sh 'python3 -m venv myenv'
           
           // Activate the virtual environment
-          sh 'source myenv/bin/activate'		
+          sh '. myenv/bin/activate'
+		
 		sh 'sudo su'
 
                 sh 'pip install -r requirements.txt' // Install project dependencies
@@ -52,7 +53,8 @@ stage("Testing with Pytest"){
 	steps{
 		script{
 			// Activate the virtual environment
-       		   sh 'source myenv/bin/activate'
+       		   sh '. myenv/bin/activate'
+
 				sh "pytest test_app.py"
 		}
 	}
@@ -92,7 +94,7 @@ post {
     always {
         script {
 		      // Deactivate the virtual environment
-      sh 'deactivate'
+             sh 'if [[ -n "${VIRTUAL_ENV}" ]]; then deactivate; fi'
 
             def buildStatus = currentBuild.currentResult ?: 'UNKNOWN'
             def color = buildStatus == 'SUCCESS' ? 'good' : 'danger'
