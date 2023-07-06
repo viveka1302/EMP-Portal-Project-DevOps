@@ -89,6 +89,9 @@ stage("Testing with Pytest"){
 post {
     always {
         script {
+		      // Deactivate the virtual environment
+      sh 'deactivate'
+
             def buildStatus = currentBuild.currentResult ?: 'UNKNOWN'
             def color = buildStatus == 'SUCCESS' ? 'good' : 'danger'
 
