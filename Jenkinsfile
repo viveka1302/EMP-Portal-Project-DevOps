@@ -109,7 +109,7 @@ stage('Clean Up') {
 		sh 'sudo su'
                 sh "docker tag xebia-app viveka1302/xebia-app:latest"
                 sh "docker login -u $DOCKERHUB_CREDS_USR -p $DOCKERHUB_CREDS_PSW"
-                sh "docker push viveka1302/new_xebia_app"
+                sh "docker push $DOCKERHUB_CREDS_USR/xebia-app"
             }
         }
     }
