@@ -100,7 +100,7 @@ stage('Clean Up') {
 
         stage('Build image') {
             steps {
-                sh 'sudo docker build -t flask-app .'
+                sh 'sudo docker build -t xebia-app .'
             }
         }
 
