@@ -100,12 +100,13 @@ stage('Clean Up') {
 
         stage('Build image') {
             steps {
-                sh 'docker build -t flask-app .'
+                sh 'sudo docker build -t flask-app .'
             }
         }
 
         stage('Push To Dockerhub') {
             steps {
+		sh 'sudo su'
                 sh "docker tag Xebia-app viveka1302/Xebia-app:latest"
                 sh "docker login -u $DOCKERHUB_CREDS_USER -p $DOCKERHUB_CREDS_PSW"
                 sh "docker push viveka1302/new_Xebia_app"
