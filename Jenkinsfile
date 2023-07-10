@@ -107,9 +107,9 @@ stage('Clean Up') {
         stage('Push To Dockerhub') {
             steps {
 		sh 'sudo su'
-                sh "docker tag Xebia-app viveka1302/Xebia-app:latest"
+                sh "docker tag xebia-app viveka1302/xebia-app:latest"
                 sh "docker login -u $DOCKERHUB_CREDS_USER -p $DOCKERHUB_CREDS_PSW"
-                sh "docker push viveka1302/new_Xebia_app"
+                sh "docker push viveka1302/new_xebia_app"
             }
         }
     }
