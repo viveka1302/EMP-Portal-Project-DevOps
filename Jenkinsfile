@@ -63,7 +63,7 @@ stage("Testing with Pytest"){
 }
         
         
- stage('SonarQube Analysis') {
+/* stage('SonarQube Analysis') {
             steps {
                 script {
                     withSonarQubeEnv(installationName: 'VivekSonarServer') {
@@ -88,7 +88,7 @@ stage("Testing with Pytest"){
                     }
                 }
             }
-        }
+        }*/
 
 stage('Clean Up') {
             steps {
